@@ -1,0 +1,14 @@
+version: "2.1"
+services:
+  product-user:
+    container_name: Product-user
+    image: product-user
+    build:
+      context: "src/main/java/com/productuserapi/productUser"
+      dockerfile: "./src/main/docker/Dockerfile"
+    ports:
+      - "80:8080"
+networks:
+  default:
+    external:
+      name: "br0"
