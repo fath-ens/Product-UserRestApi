@@ -7,23 +7,27 @@
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <changeSet id="1" author="productUser">
-        <createTable tableName="Product">
-            <column name="id" type="int" autoIncrement="true">
-                <constraints primaryKey="true" nullable="false"/>
-            </column>
-            <column name="name" type="varchar(255)"/>
-            <column name="userid" type="int"/>
-            <column name="os" type="varchar(255)"/>
-            <column name="cpu" type="varchar(255)"/>
-            <column name="gpu" type="int"/>
-            <column name="ram" type="int"/>
-        </createTable>
         <createTable tableName="User">
             <column name="id" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)"/>
+            <column name="email" type="varchar(255)"/>
         </createTable>
+        <createTable tableName="Product">
+            <column name="id" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="varchar(255)"/>
+            <column name="userid" type="int">
+                <constraints foreignKeyName="fk_products_user_id" referencedTableName="user" referencedColumnNames="id" deferrable="true" deleteCascade="true" nullable="false"/>
+            </column>
+            <column name="os" type="varchar(255)"/>
+            <column name="cpu" type="varchar(255)"/>
+            <column name="gpu" type="int"/>
+            <column name="ram" type="int"/>
+        </createTable>
+
 
     </changeSet>
 </databaseChangeLog>

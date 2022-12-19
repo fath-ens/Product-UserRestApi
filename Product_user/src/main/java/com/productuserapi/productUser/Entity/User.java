@@ -21,7 +21,10 @@ public class User {
     @Column
     private String name;
 
-    @OneToMany(mappedBy = "userid")
+    @Column
+    private String email;
+
+    @OneToMany(mappedBy = "userid", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Product> product;
 
     public User(String name) {

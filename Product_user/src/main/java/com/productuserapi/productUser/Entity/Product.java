@@ -11,6 +11,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "Product")
 public class Product {
 
     @Id
@@ -18,8 +19,8 @@ public class Product {
     @Column
     private int id;
 
-    @ManyToOne
-    @JoinColumn(name = "userid")
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid", nullable = false, updatable = false)
     private User userid;
 
     @Column

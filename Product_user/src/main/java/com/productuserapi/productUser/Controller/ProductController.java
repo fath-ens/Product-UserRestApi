@@ -9,6 +9,7 @@ import com.productuserapi.productUser.Entity.User;
 import com.productuserapi.productUser.Exception.ErrorCode;
 import com.productuserapi.productUser.Exception.ServerException;
 import com.productuserapi.productUser.Mapped.MapStructMapper;
+import com.productuserapi.productUser.Service.EmailService;
 import com.productuserapi.productUser.Service.ProductService;
 import com.productuserapi.productUser.Service.UserService;
 import com.productuserapi.productUser.validation.constraints.Autherizer;
@@ -30,6 +31,8 @@ public class ProductController {
     private final UserService userService;
     private final MapStructMapper mapStructMapper;
 
+    private final EmailService emailService;
+
     @GetMapping("/AllProduct")
     public List<ProductDto> getAllProduct(){
         List<Product> products = productService.getAllProduct();
@@ -48,13 +51,16 @@ public class ProductController {
         for (Product product:products){
             productDtos.add(mapStructMapper.productToProductDto(product));
         }
+        emailService.sendEmail(user.getEmail(), "Product Listesi", productDtos.toString());
         return productDtos;
     }
 
     @PostMapping("/NewProduct")
     @Autherizer
     public String newProduct(@Validated(New.class) @RequestBody ProductDto productDto){
-        productService.saveNewProduct(mapStructMapper.productDtoToProduct(productDto));
+        Product product = mapStructMapper.productDtoToProduct(productDto);
+        productService.saveNewProduct(product);
+        emailService.sendEmail(product.getUserid().getEmail(), "New Product", "Save to product");
         return "Save to product";
     }
 

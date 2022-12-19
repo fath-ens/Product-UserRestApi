@@ -29,6 +29,5 @@
 
     <include file="classpath:db/changelog/changelog/db.changelog-0.1.0.xml" relativeToChangelogFile="false"/>
     <include file="classpath:db/changelog/changelog/db.changelog-0.2.0.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:db/changelog/changelog/db.changelog-0.3.0.xml" relativeToChangelogFile="false"/>
 
 </databaseChangeLog>

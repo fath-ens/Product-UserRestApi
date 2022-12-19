@@ -18,12 +18,14 @@ import java.io.Serializable;
 @Data
 public class UserDto implements Serializable {
 
-    @NotNull(groups = Existing.class)
-    @Null(groups = New.class)
-    private int id;
+
 
     @NotEmpty
     @Size(max = 255)
     private String name;
+
+    @NotEmpty
+    @Size(max = 255)
+    private String email;
 
 }

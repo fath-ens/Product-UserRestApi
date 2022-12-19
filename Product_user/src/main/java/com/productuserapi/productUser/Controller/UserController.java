@@ -5,6 +5,7 @@ import com.productuserapi.productUser.DTO.New;
 import com.productuserapi.productUser.DTO.UserDto;
 import com.productuserapi.productUser.Entity.User;
 import com.productuserapi.productUser.Mapped.MapStructMapper;
+import com.productuserapi.productUser.Service.EmailService;
 import com.productuserapi.productUser.Service.UserService;
 import com.productuserapi.productUser.validation.constraints.IdParametersEqual;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +23,8 @@ public class UserController {
 
     private final UserService userService;
     private final MapStructMapper mapStructMapper;
+
+    private final EmailService emailService;
 
     @GetMapping("/AllUser")
     public List<UserDto> getAllUser(){
@@ -46,6 +49,7 @@ public class UserController {
     public String newUser(@Validated(New.class) @RequestBody UserDto userDto){
         User user = mapStructMapper.userDtoToUser(userDto, User.getInstance());
         userService.saveNewUser(user);
+        emailService.sendEmail(user.getEmail(), "New User", "Save to Users");
         return "Save to Users";
     }
 
